@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Profile</title>
+</head>
+<body>
+<h1>User: <span th:text="${user.username}"></span></h1>
+<i class="fa-regular fa-user card-img-top"></i>
+<p>First Name: <span th:text="${user.firstName}"></span></p>
+<p>Last Name: <span th:text="${user.lastName}"></span></p>
+<p>Bio: <span th:text="${user.bio}"></span></p>
+
+<h2>Posts:</h2>
+<ul>
+    <li th:each="post : ${user.posts}">
+        <span th:text="${post.body}"></span>
+        <span>Posted on: <span th:text="${post.createdAt}"></span></span>
+    </li>
+</ul>
+
+
+<h2>New Post:</h2>
+<form action="/posts" method="post">
+    <label>
+        <textarea name="body" rows="4" cols="50" placeholder="Tweet or uhhh... thread it."></textarea>
+    </label>
+    <button type="submit">Submit</button>
+</form>
+
+
+<a href="/logout">Logout</a>
+</body>
+</html>

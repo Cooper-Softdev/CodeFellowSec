@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sign up Page</title>
+</head>
+<body>
+<h1>CodeFellow Security</h1>
+<form action="/signup" method="post">
+    <fieldset>
+        <legend>Signup</legend>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username"/>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password"/>
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="firstName"/>
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="lastName"/>
+        <label for="dateOfBirth">Date of Birth:</label>
+        <input type="date" id="dateOfBirth" name="dateOfBirth"/>
+        <label for="bio">Bio:</label>
+        <textarea id="bio" name="bio"></textarea>
+        <input type="submit" value="Sign up"/>
+    </fieldset>
+</form>
+
+<p>Sign in here if you have an account --> <a href="/login">Login</a></p>
+</body>
+</html>

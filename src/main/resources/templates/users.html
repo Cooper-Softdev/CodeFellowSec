@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+    <style>
+        .container {
+          display: flex;
+          justify-content: space-between;
+        }
+        .card {
+          border: 1px solid #000;
+          margin: 10px;
+          padding: 10px;
+        }
+        .card-img-top {
+          width: 100%;
+        }
+        .card-title {
+          font-weight: bold;
+        }
+        .card-text {
+          margin-bottom: 10px;
+        }
+        .list-group-item {
+          border-bottom: 1px solid #000;
+        }
+        table {
+          width: 100%;
+          border-collapse: collapse;
+        }
+        th, td {
+          border: 1px solid #000;
+          padding: 5px;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="fragments/nav-header"></div>
+
+<div class="container">
+    <div class="card">
+        <i class="fa-regular fa-user card-img-top"></i>
+        <div class="card-body">
+            <h5 th:text="${'Username: ' + foundUser.username}" class="card-title">Username</h5>
+            <p th:text="${foundUser.bio}" class="card-text">Bio</p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li th:text="'First Name: ' + ${foundUser.firstName}" class="list-group-item">An item</li>
+            <li th:text="'Last Name: ' + ${foundUser.lastName}" class="list-group-item">A second item</li>
+            <li th:text="'Date of Birth: ' + ${foundUser.dateOfBirth}" class="list-group-item">A third item</li>
+        </ul>
+    </div>
+
+    <div>
+        <table>
+            <thead>
+            <tr>
+                <th scope="col">UserName</th>
+                <th scope="col">Post</th>
+                <th scope="col">Time</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="post : ${foundUser.posts}">
+                <td th:text="${foundUser.username}">User Name</td>
+                <td th:text="${post.body}">Body</td>
+                <td th:text="${post.time}">Time</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+</body>
+</html>
