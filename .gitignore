@@ -5,6 +5,7 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+### Spring Stuff
 src/main/resources/application.properties
 
 ### STS ###
