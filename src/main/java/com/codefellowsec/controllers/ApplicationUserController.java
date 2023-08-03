@@ -17,6 +17,9 @@ import org.springframework.web.servlet.view.RedirectView;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @Controller
 public class ApplicationUserController {
@@ -114,6 +117,69 @@ public class ApplicationUserController {
                 .orElseThrow(() -> new ResourceNotFoundException("User ID not found: " + id));
         m.addAttribute("foundUser", foundUser);
 
+        ApplicationUser browsingUser = userRepository.findByUsername(p.getName());
+        boolean alreadyFollowing = browsingUser.getUsersIFollow().contains(foundUser);
+        m.addAttribute("alreadyFollowing", alreadyFollowing);
+
         return "users.html";
+    }
+
+    @PutMapping("/follow-user/{id}")
+    public RedirectView followUser(Principal p, @PathVariable Long id) {
+        ApplicationUser userToFollow = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User ID not found: " + id));
+
+        ApplicationUser browsingUser = userRepository.findByUsername(p.getName());
+
+        if (browsingUser.getId().equals(userToFollow.getId())) {
+            throw new IllegalArgumentException("A little vain...no?");
+        }
+
+        if (browsingUser.getUsersIFollow().contains(userToFollow)) {
+            browsingUser.getUsersIFollow().remove(userToFollow);
+        } else {
+            browsingUser.getUsersIFollow().add(userToFollow);
+        }
+
+        userRepository.save(browsingUser);
+
+        return new RedirectView("/users/" + id);
+    }
+
+    @GetMapping("/userindex")
+    public String getUserIndex(Model m, Principal p) {
+        if (p != null) {
+            String username = p.getName();
+            ApplicationUser currentUser = userRepository.findByUsername(username);
+            m.addAttribute("currentUser", currentUser);
+            m.addAttribute("username", username);
+        }
+
+        List<ApplicationUser> allUsers = userRepository.findAll();
+        m.addAttribute("allUsers", allUsers);
+        return "user-index.html";
+    }
+
+    @GetMapping("/feed")
+    public String getFeed(Model m, Principal p) {
+        if (p != null) {
+            String username = p.getName();
+            ApplicationUser currentUser = userRepository.findByUsername(username);
+            m.addAttribute("currentUser", currentUser);
+            m.addAttribute("username", username);
+
+            List<DoPost> latestPosts = new ArrayList<>();
+            for (ApplicationUser user : currentUser.getUsersIFollow()) {
+                latestPosts.addAll(user.getPosts());
+            }
+
+            Collections.sort(latestPosts, (p1, p2) -> p2.getTime().compareTo(p1.getTime()));
+            if (latestPosts.size() > 50) {
+                latestPosts = latestPosts.subList(0, 50);
+            }
+
+            m.addAttribute("latestPosts", latestPosts);
+        }
+        return "feed.html";
     }
 }

@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>The User Index</title>
+    <style>
+        .container {
+          width: 80%;
+          margin: 2em auto;
+        }
+        .row {
+          display: flex;
+          flex-wrap: wrap;
+        }
+        .col {
+          flex: 1 0 50%;
+          margin-bottom: 1em;
+        }
+        .card {
+          border: 1px solid #ccc;
+          padding: 1em;
+          margin: 1em;
+        }
+        .card-header {
+          font-weight: bold;
+        }
+        .card-footer {
+          color: #777;
+          font-size: 0.8em;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="fragments/nav-header"></div>
+
+<div class="container">
+    <div class="row">
+        <div th:each="post : ${latestPosts}" class="col">
+            <div class="card">
+                <div class="card-header">
+                    <a th:href="@{'/users/' + ${post.applicationUser.id}}" th:text="${post.applicationUser.username}"></a>
+                </div>
+                <div class="card-body">
+                    <p th:text="${post.body}" class="card-text"></p>
+                </div>
+                <div class="card-footer text-muted">
+                    <small th:text="${post.time}"></small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

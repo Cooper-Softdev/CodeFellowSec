@@ -1,41 +1,45 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>User Profile</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Page</title>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
         .container {
-          display: flex;
-          justify-content: space-between;
+            display: flex;
+            justify-content: space-between;
+            margin: auto;
+            overflow: hidden;
+            width: 80%;
         }
         .card {
-          border: 1px solid #000;
-          margin: 10px;
-          padding: 10px;
-        }
-        .card-img-top {
-          width: 100%;
+            border: 1px solid #000;
+            margin: 10px;
+            padding: 10px;
         }
         .card-title {
-          font-weight: bold;
+            font-weight: bold;
         }
         .card-text {
-          margin-bottom: 10px;
+            margin-bottom: 10px;
         }
-        .list-group-item {
-          border-bottom: 1px solid #000;
+        .list-items {
+            border-bottom: 1px solid #000;
         }
         table {
-          width: 100%;
-          border-collapse: collapse;
+            width: 100%;
+            border-collapse: collapse;
         }
         th, td {
-          border: 1px solid #000;
-          padding: 5px;
+            border: 1px solid #000;
+            padding: 5px;
         }
     </style>
 </head>
@@ -50,9 +54,9 @@
             <p th:text="${foundUser.bio}" class="card-text">Bio</p>
         </div>
         <ul class="list-group list-group-flush">
-            <li th:text="'First Name: ' + ${foundUser.firstName}" class="list-group-item">An item</li>
-            <li th:text="'Last Name: ' + ${foundUser.lastName}" class="list-group-item">A second item</li>
-            <li th:text="'Date of Birth: ' + ${foundUser.dateOfBirth}" class="list-group-item">A third item</li>
+            <li th:text="'First Name: ' + ${foundUser.firstName}" class="list-items">Given</li>
+            <li th:text="'Last Name: ' + ${foundUser.lastName}" class="list-items">Family</li>
+            <li th:text="'Date of Birth: ' + ${foundUser.dateOfBirth}" class="list-items">Birth</li>
         </ul>
     </div>
 
@@ -75,7 +79,6 @@
         </table>
     </div>
 </div>
-
-
 </body>
 </html>
+

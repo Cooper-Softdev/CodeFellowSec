@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
@@ -6,12 +6,34 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Home</title>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+        .text-center {
+            text-align: center;
+        }
+        h1, h3 {
+            color: #333;
+        }
+    </style>
 </head>
 <body>
-<h1>Welcome to CodeFellowship</h1>
-<i class="fa-regular fa-user card-img-top"></i>
-<p>Welcome, <span th:text="${#authentication.principal.username}"></span>!</p>
+<div th:replace="fragments/nav-header"></div>
+
+<div class="container text-center">
+    <h1>Welcome to CodeFellowSec</h1>
+    <h3 th:if="${username != null}">You're Logged In</h3>
+</div>
+
 <div th:if="${#authentication.isAuthenticated()}">
     <a th:href="@{/myprofile}">My Profile</a> | <a href="/logout">Logout</a>
 </div>

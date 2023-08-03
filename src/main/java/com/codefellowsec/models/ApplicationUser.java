@@ -6,7 +6,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class ApplicationUser implements UserDetails {
@@ -24,6 +26,18 @@ public class ApplicationUser implements UserDetails {
 
     @OneToMany(mappedBy = "applicationUser")
     private List<DoPost> posts;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_followers",
+            joinColumns = {@JoinColumn(name = "follower_id")},
+            inverseJoinColumns = {@JoinColumn(name = "followee_id")}
+    )
+
+    private Set<ApplicationUser> usersIFollow = new HashSet<>();
+
+    @ManyToMany(mappedBy = "usersIFollow")
+    private Set<ApplicationUser> usersWhoFollowMe = new HashSet<>();
 
     public ApplicationUser() {}
 
@@ -55,6 +69,12 @@ public class ApplicationUser implements UserDetails {
 
     public List<DoPost> getPosts() { return this.posts; }
 
+    public Set<ApplicationUser> getUsersIFollow() { return usersIFollow; }
+    public void setUsersIFollow(Set<ApplicationUser> usersIFollow) { this.usersIFollow = usersIFollow; }
+
+    public Set<ApplicationUser> getUsersWhoFollowMe() { return usersWhoFollowMe; }
+    public void setUsersWhoFollowMe(Set<ApplicationUser> usersWhoFollowMe) { this.usersWhoFollowMe = usersWhoFollowMe; }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() { return null; }
 
@@ -69,6 +89,10 @@ public class ApplicationUser implements UserDetails {
 
     @Override
     public boolean isEnabled() { return true; }
+
+    public Long getId() {
+        return id;
+    }
 
     @Override
     public String toString() {
